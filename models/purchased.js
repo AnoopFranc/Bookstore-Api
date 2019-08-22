@@ -10,7 +10,7 @@ const purchaseSchema = new schema ({
     },
     email: {
         type: String,
-        ref: 'user',
+        ref: 'User',
         required: true
     }
 });

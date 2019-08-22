@@ -24,9 +24,27 @@ exports.getAll = async (req, res) => {
      try {
 
       let docs =await Purchase.find({email:req.user.email})
-        res.send(docs) 
+      .populate('book')
+      .exec()
+
+
+    res.status(200).json({
+          count: docs.length,
+          orders: docs.map(doc => {
+            return {
+              _id: doc._id,
+              title: doc.book.title,
+              price: doc.book.price,
+              product: doc.book.product,
+              email: doc.email,
+              owner: doc.email.name
+            };
+          })
+        });
+
+ 
     } catch (e) {
-        res.status(500).send()
+        res.status(500).send({message:e.message})
     }
 }
 

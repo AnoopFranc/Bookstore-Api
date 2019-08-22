@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "mocha || true",
-    "dev": "mode"
+    "dev": "nodemon app.js"
   },
   "keywords": [],
   "author": "",

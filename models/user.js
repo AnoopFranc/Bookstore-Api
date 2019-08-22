@@ -8,8 +8,7 @@ let Schema = mongoose.Schema;
 let userSchema = new Schema({
     name: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     email: {
         type: String,
@@ -36,12 +35,6 @@ let userSchema = new Schema({
 }]
 });
 
-//used when in reference to many values like when populating with comments in a certain post
-userSchema.virtual('contacts', {
-    ref: 'Contact',
-    localField: '_id',
-    foreignField: 'owner'
-})
 
 // we dont have to explicitly call toJSON method
 //hides details like password and token 
@@ -68,8 +61,8 @@ userSchema.methods.createToken = async function ()  {
     return token;
 }
 // for matching login credentials declared static for accesing the model
-userSchema.statics.findByCredentials = async (name, password) => {
-    const user = await User.findOne({ name })
+userSchema.statics.findByCredentials = async (email, password) => {
+    const user = await User.findOne({ email })
 
     if (!user) {
         throw new Error('Unable to login')

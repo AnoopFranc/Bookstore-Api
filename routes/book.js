@@ -1,15 +1,13 @@
 const express = require('express')
 const router = express.Router();
 
-const auth = require('./auth');
-const contactControll = require('../controller/bookController');
+const auth = require('./auth')
+const bookControll = require('../controller/bookController');
 
 //routes to create get and edit contacts
-router.post('/contact', auth, contactControll.createContact)
+router.post('/book',  bookControll.createBook)
 
-router.get('/contacts', auth, contactControll.getAll)
-
-router.patch('/contact/:id', auth, contactControll.updateContact)
+router.get('/books',auth,bookControll.getAll)
 
 
 module.exports = router

@@ -9,7 +9,7 @@ const bookSchema = new Schema({
         trim: true
     },
     author: {
-        type: Number
+        type: String
     },
     description: {
         type: String,
@@ -18,11 +18,6 @@ const bookSchema = new Schema({
     price: {
         type: Number,
         required: true
-    },
-    owner: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: 'User'
     }
 })
 

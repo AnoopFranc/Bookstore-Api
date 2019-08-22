@@ -8,7 +8,7 @@ const app = express();
 //importing routes
 const userRoutes = require('./routes/user');
 const bookRoutes = require('./routes/book');
-
+const orderRoutes = require('./routes/purchase');
 
 
 //cross-origin resource sharing
@@ -32,10 +32,10 @@ app.use(express.json());
 
 //routes
 app.use('/user',userRoutes);
-app.use('/',bookRoutes)
+app.use('/books',bookRoutes);
+app.use('/orders',orderRoutes);
 // stored in enviornment variable
 const port =process.env.PORT || 3000; 
-console.log('db is',process.env.DB_CONNECTION)//1234asd
 
 const uri = process.env.DB_CONNECTION
 mongoose.connect(uri, {useNewUrlParser: true}).then(() => {

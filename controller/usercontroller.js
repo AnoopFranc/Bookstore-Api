@@ -3,10 +3,12 @@ const User = require('../models/user');
 exports.Register = async (req,res,next) => {
     let name = req.body.name;
     let pass = req.body.password;
+    let email = req.body.email
     try {
         let user = new User({
             name: name,
-            password: pass,
+            email: email,
+            password: pass
         })
         await user.save();
         //creates jwt token
@@ -24,7 +26,7 @@ exports.Login = async (req, res,next) => {
     
     try {
         //calling satatic method of matching credentials
-        const match = await User.findByCredentials(req.body.name,req.body.password)
+        const match = await User.findByCredentials(req.body.email,req.body.password)
         if(match){
             //returns other registered contacts without the password and token field as an array
             //select excludes the fields specified

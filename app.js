@@ -47,3 +47,6 @@ mongoose.connect(uri, {useNewUrlParser: true}).then(() => {
 .catch(err => {
   console.log(err);
 })
+
+
+module.exports = app;//for testing purpose

@@ -7,17 +7,26 @@ let Purchase = require('../models/purchased');
 let assert = require('assert');
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let app = require('../app');
+let {app,dbApp} = require('../app');
+
 let should = chai.should();
 
 
 chai.use(chaiHttp);
 //Our parent block
 
-/*
-  * Test the /GET route
-  */
-  describe('/Post User', () => {
+
+
+
+describe('User', () => {
+
+  this.timeout = 10000;
+
+  before(async function (done) {
+   mongoose.connect('mongodb+srv://A1:0987654321@book-pjs68.mongodb.net/test?retryWrites=true&w=majority',{useNewUrlParser: true},done)
+  });
+
+  
     let user = {
         name: "ThegvR  ings",
         email: '1954@SprList.com',
@@ -25,17 +34,21 @@ chai.use(chaiHttp);
         
     }
       it('it should return posted User',  (done) => {
-        chai.request(app)
+         chai.request(app)
             .post('/user/register')
             .send(user)
-            .end(async (err, res) => {
-                await res; 
-                res.should.have.status(400);
+            .end( (err, res) => {
+                res.should.have.status(201);
                 res.body.should.be.a('object');
-                //res.body.should.have.property('token');
-                //res.body.should.have.property('user');
+                res.body.should.have.property('message').eql('User Registered');
+                res.body.should.have.property('token');
+                res.body.should.have.property('user');
               done();
             });
       });
-  });
+})
+/*
+  * Test the /post route
+  */
+ 
 

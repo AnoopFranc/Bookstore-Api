@@ -20,7 +20,7 @@ exports.Register = async (req,res,next) => {
         await user.save();
         //creates jwt token
         const token = await user.createToken();
-        res.status(201).send({user:user,token:token});
+        res.status(201).send({user:user,token:token,message:"User Registered"});
     } catch (error) {
      res.status(400).send({message: error.message});   
     }

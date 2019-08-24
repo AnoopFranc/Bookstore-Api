@@ -4,20 +4,7 @@ const mongoose = require('mongoose');
 require('dotenv/config'); 
 //initialize the app
 const app = express();
-async function dbApp () {
-  try {
-    const uri = process.env.DB_CONNECTION
-  console.log(uri)
-  await mongoose.connect(uri, {useNewUrlParser: true})
-      console.log("DB Connection successful");
-      app.listen(port,() => {
-        console.log(`Your port is ${port}`);
-      });
-  } catch (error) {
-    console.log(err.message);
-  }
-}
-dbApp();
+
 
     
 
@@ -53,6 +40,23 @@ app.use('/books',bookRoutes);
 app.use('/orders',orderRoutes);
 // stored in enviornment variable
 const port =process.env.PORT || 3000; 
+
+
+
+  const uri = process.env.DB_CONNECTION
+
+mongoose.connect(uri, {useNewUrlParser: true}).then(() => {
+    console.log("DB Connection successful");
+    app.listen(port,() => {
+      console.log(`Your port is ${port}`);
+    });
+})
+.catch(err => {
+  console.log(err);
+})
+
+
+    
 
 
 

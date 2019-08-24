@@ -25,7 +25,7 @@ exports.getAll = async (req, res) => {
 
       let docs =await Purchase.find({email:req.user.email})
       .populate('book')
-      .exec()
+      .exec()// populates the book field and can access details of book
 
 
     res.status(200).json({

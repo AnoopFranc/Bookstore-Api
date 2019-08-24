@@ -5,12 +5,11 @@ exports.Register = async (req,res,next) => {
     let name = req.body.name;
     let pass = req.body.password;
     let email = req.body.email
-    console.log(name,"###wassup####",name.length);
 
 
     try {
         if(name.length === 0 || !validator.isAlpha(name)){
-            throw new Error()
+            throw new Error("wrong input")
         }
         let user = new User({
             name: name,

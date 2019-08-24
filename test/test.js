@@ -6,6 +6,7 @@ let Purchase = require('../models/purchased');
 //Require the dev-dependencies
 let assert = require('assert');
 let chai = require('chai');
+let expect = require('chai').expect
 let chaiHttp = require('chai-http');
 let {app,dbApp} = require('../app');
 
@@ -15,28 +16,28 @@ let should = chai.should();
 chai.use(chaiHttp);
 //Our parent block
 
-
-
-
 describe('User', () => {
-
-  this.timeout = 10000;
-
-  before(async function (done) {
-   mongoose.connect('mongodb+srv://A1:0987654321@book-pjs68.mongodb.net/test?retryWrites=true&w=majority',{useNewUrlParser: true},done)
+  beforeEach((done) => { //Before each test we empty the database
+      User.remove({}, (err) => { 
+         done();           
+      });        
   });
 
+
+describe('User register post', () => {
+
   
-    let user = {
-        name: "ThegvR  ings",
-        email: '1954@SprList.com',
+    let user1 = {
+        name: "ThegvRings",
+        email: 'anssp@t.com',
         password: "J.R.R.Tolkien"
         
     }
       it('it should return posted User',  (done) => {
+        
          chai.request(app)
             .post('/user/register')
-            .send(user)
+            .send(user1)
             .end( (err, res) => {
                 res.should.have.status(201);
                 res.body.should.be.a('object');
@@ -46,9 +47,24 @@ describe('User', () => {
               done();
             });
       });
-})
-/*
-  * Test the /post route
-  */
- 
 
+
+        let user2 = {
+          name: '',
+          email: 'a@b.com',
+          password: 'i123defr'
+        }
+      it('it should return error',  (done) => {
+        
+        chai.request(app)
+           .post('/user/register')
+           .send(user2)
+           .end( (err, res) => {
+               res.should.have.status(400);
+               res.body.should.have.property('message').eql('wrong input');
+             done();
+           });
+     });
+})
+
+});
